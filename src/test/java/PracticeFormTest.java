@@ -1,15 +1,10 @@
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.image;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byName;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTest {
@@ -33,6 +28,9 @@ public class PracticeFormTest {
     @Test
     void practiceFormTst(){
         open("/automation-practice-form");
+        // Закрываем баннеры на странице
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
         // Проверка заголовка страницы
         $(".text-center").shouldHave(text("Practice Form"));
         // Ввод фамилию, имя, пол, почту и номер телефона
@@ -50,7 +48,7 @@ public class PracticeFormTest {
         $("#subjectsInput").setValue(subjects).pressEnter();
         $("[for=hobbies-checkbox-2]").click();
         // Загрузка изображения
-        $("#uploadPicture").uploadFile(new File("src/test/resources/" + fileToUpload));
+        $("#uploadPicture").uploadFromClasspath(fileToUpload);
         // Ввод текущего адреса
         $("#currentAddress").setValue(currentAddress);
         // Выбор штата и города
@@ -63,9 +61,14 @@ public class PracticeFormTest {
         $(".modal-body").shouldHave(text(firstName),
                 text(lastName),
                 text(email),
+                text(birthYear),
+                text(birthMonth),
                 text(number),
+                text(subjects),
                 text(fileToUpload),
-                text(currentAddress));
+                text(currentAddress),
+                text(state),
+                text(city));
 
     }
 }
