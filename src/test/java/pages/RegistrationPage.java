@@ -16,27 +16,32 @@ import pages.components.TableResultComponent;
 public class RegistrationPage {
     CalendarComponent calendarComponent = new CalendarComponent();
     TableResultComponent tableResultComponent = new TableResultComponent();
-    private SelenideElement firstNameField = $("#firstName");
-    private SelenideElement lastNameField = $("#lastName");
-    private SelenideElement userEmailField = $("#userEmail");
-    private SelenideElement genderRadio = $("#genterWrapper");
-    private SelenideElement phoneNumberField = $("#userNumber");
-    private SelenideElement subjectsInput = $("#subjectsInput");
-    private SelenideElement hobbiesCheckbox = $("#hobbiesWrapper");
-    private SelenideElement uploadPictureButton = $("#uploadPicture");
-    private SelenideElement currentAddressField = $("#currentAddress");
-    private SelenideElement stateFieldSelect = $("#react-select-3-input");
-    private SelenideElement cityFieldSelect = $("#react-select-4-input");
-    private SelenideElement submitButton = $("#submit");
-    private SelenideElement resultTable =  $(".modal-content");
+
+    private final SelenideElement titlePageText = $(".text-center");
+    private final SelenideElement firstNameField = $("#firstName");
+    private final SelenideElement lastNameField = $("#lastName");
+    private final SelenideElement userEmailField = $("#userEmail");
+    private final SelenideElement genderRadio = $("#genterWrapper");
+    private final SelenideElement phoneNumberField = $("#userNumber");
+    private final SelenideElement subjectsInput = $("#subjectsInput");
+    private final SelenideElement hobbiesCheckbox = $("#hobbiesWrapper");
+    private final SelenideElement uploadPictureButton = $("#uploadPicture");
+    private final SelenideElement currentAddressField = $("#currentAddress");
+    private final SelenideElement stateFieldSelect = $("#react-select-3-input");
+    private final SelenideElement cityFieldSelect = $("#react-select-4-input");
+    private final SelenideElement submitButton = $("#submit");
+    private final SelenideElement resultTable =  $(".modal-content");
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+        titlePageText.shouldHave(text("Practice Form"));
+        return this;
+    }
+    public RegistrationPage removeBanners(){
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
-        $(".text-center").shouldHave(text("Practice Form"));
         return this;
-    } 
+    }
     
     public RegistrationPage setFirstName(String firstName){
         firstNameField.setValue(firstName);
