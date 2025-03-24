@@ -1,23 +1,9 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
+import static pages.TestData.*;
 
 public class PracticeFormTest extends TestBase {
-
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String userEmail = faker.internet().emailAddress();
-    String gender = faker.demographic().sex();
-    String phoneNumber = faker.phoneNumber().subscriberNumber(10);
-    String dayOfBirth = String.valueOf(faker.number().numberBetween(10, 31));
-    String monthOfBirth = faker.options().option("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-    String yearOfBirth = String.valueOf(faker.number().numberBetween(1900, 2024));
-    String subjects = faker.options().option("Maths", "English", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce", "Accounting", "Economics", "Arts", "Social Studies", "History", "Civics");
-    String hobbies = faker.options().option("Sports", "Reading", "Music");
-    String state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
-    String city = faker.options().option("Delhi", "Agra", "Karnal", "Jaipur");
-    String address = faker.address().fullAddress();
-    String picture = "cat.jpeg";
 
     @Test
     void successfulRegistrationWithRequiredFieldsTest(){
