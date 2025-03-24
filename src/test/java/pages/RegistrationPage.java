@@ -103,9 +103,8 @@ public class RegistrationPage {
         resultTable.shouldNotBe(visible);
         return this;
     }
-    public RegistrationPage checkFirstNameBorderColor(String color){
+    public void checkFirstNameBorderColor(String color){
         firstNameField.shouldHave(cssValue("border-color", color));
-        return this;
     }
 
 }

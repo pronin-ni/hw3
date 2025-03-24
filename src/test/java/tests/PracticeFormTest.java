@@ -2,54 +2,66 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 
-import pages.RegistrationPage;
-
 public class PracticeFormTest extends TestBase {
-    RegistrationPage registrationPage = new RegistrationPage();
+
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String userEmail = faker.internet().emailAddress();
+    String gender = faker.demographic().sex();
+    String phoneNumber = faker.phoneNumber().subscriberNumber(10);
+    String dayOfBirth = String.valueOf(faker.number().numberBetween(10, 31));
+    String monthOfBirth = faker.options().option("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    String yearOfBirth = String.valueOf(faker.number().numberBetween(1900, 2024));
+    String subjects = faker.options().option("Maths", "English", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce", "Accounting", "Economics", "Arts", "Social Studies", "History", "Civics");
+    String hobbies = faker.options().option("Sports", "Reading", "Music");
+    String state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
+    String city = faker.options().option("Delhi", "Agra", "Karnal", "Jaipur");
+    String address = faker.address().fullAddress();
+    String picture = "cat.jpeg";
 
     @Test
     void successfulRegistrationWithRequiredFieldsTest(){
-        registrationPage.openPage()
-                .setFirstName("Nikita")
-                .setLastName("Testing")
-                .setUserEmail("test@test.ru")
-                .setPhoneNumber("0123456789")
-                .setGender("Other")
-                .submitClick().checkResult("Student Name", "Nikita Testing")
-                .checkResult("Student Email", "test@test.ru").
-                checkResult("Gender", "Other");
+        registrationPage.openPage().removeBanners()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
+                .setPhoneNumber(phoneNumber)
+                .setGender(gender)
+                .submitClick().checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Student Email", userEmail).
+                checkResult("Gender", gender);
     }
     @Test
     void successfulRegistrationWithAllFieldsTest(){
-        registrationPage.openPage()
-                .setFirstName("Nikita")
-                .setLastName("Testing")
-                .setUserEmail("test@test.ru")
-                .setGender("Male")
-                .setPhoneNumber("0123456789")
-                .setDateOfBirth("19", "July", "2000")
-                .setSubjects("Maths")
-                .setHobbies("Reading")
-                .uploadPicture("cat.jpeg")
-                .setAddress("33321 Gr.Drive")
-                .setState("Haryana")
-                .setCity("Karnal")
+        registrationPage.openPage().removeBanners()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
+                .setGender(gender)
+                .setPhoneNumber(phoneNumber)
+                .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
+                .setSubjects(subjects)
+                .setHobbies(hobbies)
+                .uploadPicture(picture)
+                .setAddress(address)
+                .setState(state)
+                .setCity(city)
                 .submitClick()
-                .checkResult("Student Name", "Nikita Testing")
-                .checkResult("Student Email", "test@test.ru").
-                checkResult("Gender", "Male")
-                .checkResult("Mobile", "0123456789")
-                .checkResult("Date of Birth", "19 July,2000")
-                .checkResult("Subjects", "Maths")
-                .checkResult("Hobbies", "Reading")
-                .checkResult("Picture", "cat.jpeg")
-                .checkResult("Address", "33321 Gr.Drive")
-                .checkResult("State and City", "Karnal");
+                .checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Student Email", userEmail).
+                checkResult("Gender", gender)
+                .checkResult("Mobile", phoneNumber)
+                .checkResult("Date of Birth", dayOfBirth + " " + monthOfBirth + "," + yearOfBirth)
+                .checkResult("Subjects", subjects)
+                .checkResult("Hobbies", hobbies)
+                .checkResult("Picture", picture)
+                .checkResult("Address", address)
+                .checkResult("State and City", state + " " + city);
     }
     @Test
     void registrationFailsWithoutRequiredFieldsTest(){
-        registrationPage.openPage().setUserEmail("example@gmail.com")
-        .setPhoneNumber("0123456789")
+        registrationPage.openPage().removeBanners().setUserEmail(userEmail)
+        .setPhoneNumber(phoneNumber)
         .submitClick().resultTableNotAppear().checkFirstNameBorderColor("rgb(220, 53, 69)");
     }
 }
